@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Expense {
-  Expense(
-      {required this.title,
-      required this.amount,
-      required this.date,
-      required this.category});
-
-  // final String id;
-  final String title;
-  final double amount;
-  final DateTime date;
-  final Category category;
-}
+import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 
 enum Category {
   travel,
@@ -27,3 +16,25 @@ const categoryIcons = {
   Category.mobile: Icons.phone_android_rounded,
   Category.work: Icons.work,
 };
+
+const idGenerator = Uuid();
+final dateFormatter = DateFormat.yMd();
+
+class Expense {
+  Expense(
+      {required this.title,
+      required this.amount,
+      required this.date,
+      required this.category})
+      : id = idGenerator.v4();
+
+  final String id;
+  final String title;
+  final double amount;
+  final DateTime date;
+  final Category category;
+
+  String get FormattedDate {
+    return dateFormatter.format(date);
+  }
+}
